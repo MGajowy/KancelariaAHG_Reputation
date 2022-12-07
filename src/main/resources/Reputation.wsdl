@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+        xmlns:tns="http://gajewski.pl/reputation" name="ReputationService"
+        targetNamespace="http://gajewski.pl/reputation">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://gajewski.pl/reputation">
+            <xsd:element name="reputation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:long"/>
+                        <xsd:element name="user" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="like" type="xsd:long"/>
+                        <xsd:element name="notLike" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getReputation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:reputation"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getAllReputation">
+                <xsd:complexType/>
+            </xsd:element>
+
+            <xsd:element name="getAllReputationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:reputation" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="ReputationSoapRequest">
+        <part name="parameters" element="tns:getReputation"/>
+    </wsdl:message>
+    <wsdl:message name="ReputationSoapResponse">
+        <part name="parameters" element="tns:getResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ReputationAllSoapRequest">
+        <part name="parameters" element="tns:getAllReputation"/>
+    </wsdl:message>
+    <wsdl:message name="ReputationAllSoapResponse">
+        <part name="parameters" element="tns:getAllReputationResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ReputationInformationService">
+        <wsdl:operation name="getReputation">
+            <documentation>...</documentation>
+            <input message="tns:ReputationSoapRequest"/>
+            <output message="tns:ReputationSoapResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAllReputation">
+            <documentation>...</documentation>
+            <input message="tns:ReputationAllSoapRequest"/>
+            <output message="tns:ReputationAllSoapResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="ReputationSoapBinding" type="tns:ReputationInformationService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getReputation">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </wsdl:operation>
+        <wsdl:operation name="getAllReputation">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ReputationService">
+        <documentation>...</documentation>
+        <port name="GetReputationListSoap" binding="tns:ReputationSoapBinding">
+            <soap:address location="http://localhost:8040/ws/reputation.wsdl"/>
+        </port>
+    </wsdl:service>
+</wsdl:definitions>
