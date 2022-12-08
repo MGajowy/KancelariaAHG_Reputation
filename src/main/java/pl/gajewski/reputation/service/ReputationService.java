@@ -17,23 +17,23 @@ public class ReputationService {
         Reputation reputation1 = new Reputation();
         reputation1.setId(1);
         reputation1.setUser("Adam");
-        reputation1.setDescription("Niski");
+        reputation1.setDescription("Dobra aplikacja");
         reputation1.setLike(1);
         reputation1.setNotLike(3);
 
         Reputation reputation2 = new Reputation();
         reputation2.setId(2);
         reputation2.setUser("Ewa");
-        reputation2.setDescription("Kowalska");
+        reputation2.setDescription("Fajna strona! ");
         reputation2.setLike(35);
-        reputation2.setNotLike(33);
+        reputation2.setNotLike(3);
 
         Reputation reputation3 = new Reputation();
         reputation3.setId(3);
         reputation3.setUser("Michal");
-        reputation3.setDescription("Gajos");
-        reputation3.setLike(6);
-        reputation3.setNotLike(2);
+        reputation3.setDescription("Za mało informacji");
+        reputation3.setLike(1);
+        reputation3.setNotLike(15);
 
         reputationList.add(reputation1);
         reputationList.add(reputation2);
