@@ -1,6 +1,8 @@
 package pl.gajewski.reputation.service;
 
 import org.springframework.stereotype.Service;
+import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.AddReputation;
+
 import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.Reputation;
 
 
@@ -24,7 +26,7 @@ public class ReputationService {
         Reputation reputation2 = new Reputation();
         reputation2.setId(2);
         reputation2.setUser("Ewa");
-        reputation2.setDescription("Fajna strona! ");
+        reputation2.setDescription("Fajna strona!");
         reputation2.setLike(35);
         reputation2.setNotLike(3);
 
@@ -49,5 +51,10 @@ public class ReputationService {
 
     public List<Reputation> getAllReputation() {
         return reputationList;
+    }
+
+    public AddReputation addReputation(AddReputation reputation) {
+        reputationList.add(reputation.getReputation());
+        return reputation;
     }
 }

@@ -1,5 +1,6 @@
 package pl.gajewski.reputation.endpoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -11,13 +12,16 @@ import java.util.List;
 
 @Endpoint
 public class ReputationEndpoint {
+
+    public static final String NAME_SPACE = "http://gajewski.pl/reputation";
     private final ReputationService reputationService;
 
+    @Autowired
     public ReputationEndpoint(ReputationService reputationService) {
         this.reputationService = reputationService;
     }
 
-    @PayloadRoot(namespace = "http://gajewski.pl/reputation", localPart = "getReputation")
+    @PayloadRoot(namespace = NAME_SPACE, localPart = "getReputation")
     @ResponsePayload
     public GetResponse getReputationById(@RequestPayload GetReputation reputation) {
         Reputation result = reputationService.getReputationById(reputation.getId());
@@ -26,7 +30,7 @@ public class ReputationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = "http://gajewski.pl/reputation", localPart = "getAllReputation")
+    @PayloadRoot(namespace = NAME_SPACE, localPart = "getAllReputation")
     @ResponsePayload
     public GetAllReputationResponse getAllReputation() {
         GetAllReputationResponse response = new GetAllReputationResponse();
@@ -34,4 +38,14 @@ public class ReputationEndpoint {
         response.getReputation().addAll(allReputation);
         return response;
     }
+
+    @PayloadRoot(namespace = NAME_SPACE, localPart = "AddReputation")
+    @ResponsePayload
+    public AddReputationResponse addReputation(@RequestPayload AddReputation reputation) {
+        AddReputationResponse response = new AddReputationResponse();
+        AddReputation addReputation = reputationService.addReputation(reputation);
+        response.setReputation(reputation.getReputation());
+        return response;
+    }
+
 }

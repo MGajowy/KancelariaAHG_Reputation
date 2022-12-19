@@ -28,7 +28,6 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
-
             <xsd:element name="getResponse">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -40,11 +39,25 @@
             <xsd:element name="getAllReputation">
                 <xsd:complexType/>
             </xsd:element>
-
             <xsd:element name="getAllReputationResponse">
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element ref="tns:reputation" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="AddReputation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:reputation" minOccurs="1" maxOccurs="1"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddReputationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:reputation" minOccurs="0" maxOccurs="1"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -64,6 +77,12 @@
     <wsdl:message name="ReputationAllSoapResponse">
         <part name="parameters" element="tns:getAllReputationResponse"/>
     </wsdl:message>
+    <wsdl:message name="AddReputationSoapRequest">
+        <part name="parameters" element="tns:AddReputation"/>
+    </wsdl:message>
+    <wsdl:message name="AddReputationSoapRequestResponse">
+        <part name="parameters" element="tns:AddReputationResponse"/>
+    </wsdl:message>
 
     <wsdl:portType name="ReputationInformationService">
         <wsdl:operation name="getReputation">
@@ -75,6 +94,11 @@
             <documentation>...</documentation>
             <input message="tns:ReputationAllSoapRequest"/>
             <output message="tns:ReputationAllSoapResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddReputation">
+            <documentation>...</documentation>
+            <input message="tns:AddReputationSoapRequest"/>
+            <output message="tns:AddReputationSoapRequestResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
@@ -90,6 +114,15 @@
             </output>
         </wsdl:operation>
         <wsdl:operation name="getAllReputation">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </wsdl:operation>
+        <wsdl:operation name="AddReputation">
             <soap:operation soapAction="" style="document"/>
             <input>
                 <soap:body use="literal"/>
