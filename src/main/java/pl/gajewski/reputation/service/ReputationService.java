@@ -1,60 +1,62 @@
 package pl.gajewski.reputation.service;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.gajewski.reputation.db.model.ReputationOB;
+import pl.gajewski.reputation.db.model.repository.ReputationRepository;
 import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.AddReputation;
 
 import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.Reputation;
 
-
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ReputationService {
 
-    private List<Reputation> reputationList;
-
-    public ReputationService() {
-        reputationList = new ArrayList<Reputation>();
-        Reputation reputation1 = new Reputation();
-        reputation1.setId(1);
-        reputation1.setUser("Adam");
-        reputation1.setDescription("Dobra aplikacja");
-        reputation1.setLike(1);
-        reputation1.setNotLike(3);
-
-        Reputation reputation2 = new Reputation();
-        reputation2.setId(2);
-        reputation2.setUser("Ewa");
-        reputation2.setDescription("Fajna strona!");
-        reputation2.setLike(35);
-        reputation2.setNotLike(3);
-
-        Reputation reputation3 = new Reputation();
-        reputation3.setId(3);
-        reputation3.setUser("Michal");
-        reputation3.setDescription("Za mało informacji");
-        reputation3.setLike(1);
-        reputation3.setNotLike(15);
-
-        reputationList.add(reputation1);
-        reputationList.add(reputation2);
-        reputationList.add(reputation3);
-    }
+    @Autowired
+    private final ReputationRepository reputationRepository;
 
     public Reputation getReputationById(long id) {
-        return reputationList.stream()
-                .filter(rep -> rep.getId() == id)
-                .findFirst()
-                .get();
+        Optional<ReputationOB> result = reputationRepository.findById(id);
+        return mapObToReputation(result);
+    }
+
+    private Reputation mapObToReputation(Optional<ReputationOB> result) {
+        Reputation reputation = new Reputation();
+        reputation.setId(result.get().getId());
+        reputation.setDescription(result.get().getDescription());
+        reputation.setUser(result.get().getUserName());
+        reputation.setLike(result.get().getLikeRep());
+        reputation.setNotLike(result.get().getNotLikeRep());
+        reputation.setVisible(result.get().getVisible());
+        return reputation;
     }
 
     public List<Reputation> getAllReputation() {
-        return reputationList;
+        List<ReputationOB> result = reputationRepository.findAll();
+        return result.stream()
+                .map(reputationOB -> mapObToReputation(Optional.ofNullable(reputationOB)))
+                .collect(Collectors.toList());
     }
 
+    @Transactional
     public AddReputation addReputation(AddReputation reputation) {
-        reputationList.add(reputation.getReputation());
+        saveReputation(reputation);
         return reputation;
+    }
+
+    private void saveReputation(AddReputation reputation) {
+        ReputationOB reputationOB = new ReputationOB();
+        reputationOB.setUserName(reputation.getReputation().getUser());
+        reputationOB.setDescription(reputation.getReputation().getDescription());
+        reputationOB.setLikeRep(reputation.getReputation().getLike());
+        reputationOB.setNotLikeRep(reputation.getReputation().getNotLike());
+        reputationOB.setVisible(true);
+        reputationRepository.save(reputationOB);
     }
 }
