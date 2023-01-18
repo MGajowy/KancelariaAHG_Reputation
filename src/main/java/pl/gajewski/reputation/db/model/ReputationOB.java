@@ -25,7 +25,7 @@ public class ReputationOB {
     private String userName;
 
     @NotNull
-    @Column(name = ModelConstants.COLUMN_DESCRIPTION)
+    @Column(name = ModelConstants.COLUMN_DESCRIPTION, length = 500)
     private String description;
 
     @Column(name = ModelConstants.COLUMN_LIKE)

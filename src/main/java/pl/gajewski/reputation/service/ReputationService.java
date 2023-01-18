@@ -45,18 +45,37 @@ public class ReputationService {
     }
 
     @Transactional
-    public AddReputation addReputation(AddReputation reputation) {
-        saveReputation(reputation);
-        return reputation;
+    public Long addReputation(AddReputation reputation) {
+        return saveReputation(reputation);
     }
 
-    private void saveReputation(AddReputation reputation) {
+    private Long saveReputation(AddReputation reputation) {
         ReputationOB reputationOB = new ReputationOB();
-        reputationOB.setUserName(reputation.getReputation().getUser());
-        reputationOB.setDescription(reputation.getReputation().getDescription());
-        reputationOB.setLikeRep(reputation.getReputation().getLike());
-        reputationOB.setNotLikeRep(reputation.getReputation().getNotLike());
+        reputationOB.setUserName(reputation.getReputationAdd().getUser());
+        reputationOB.setDescription(reputation.getReputationAdd().getDescription());
+        reputationOB.setLikeRep(0L);
+        reputationOB.setNotLikeRep(0L);
         reputationOB.setVisible(true);
-        reputationRepository.save(reputationOB);
+        return reputationRepository.save(reputationOB).getId();
+    }
+
+    @Transactional
+    public Long addLikeReputation(Long id) {
+        Optional<ReputationOB> result = reputationRepository.findById(id);
+        Long likeReputation = result.get().getLikeRep();
+        likeReputation++;
+        result.get().setLikeRep(likeReputation);
+        reputationRepository.save(result.get());
+        return likeReputation;
+    }
+
+    @Transactional
+    public Long addNotLikeReputation(Long id) {
+        Optional<ReputationOB> result = reputationRepository.findById(id);
+        Long notLikeReputation = result.get().getNotLikeRep();
+        notLikeReputation++;
+        result.get().setNotLikeRep(notLikeReputation);
+        reputationRepository.save(result.get());
+        return notLikeReputation;
     }
 }

@@ -22,6 +22,15 @@
                 </xsd:complexType>
             </xsd:element>
 
+            <xsd:element name="reputationAdd">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="user" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
             <xsd:element name="getReputation">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -51,14 +60,43 @@
             <xsd:element name="AddReputation">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element ref="tns:reputation" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element ref="tns:reputationAdd" minOccurs="1" maxOccurs="1"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
             <xsd:element name="AddReputationResponse">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element ref="tns:reputation" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="id" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="AddLikeReputation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddLikeReputationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="likeReputation" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddNotLikeReputation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddNotLikeReputationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="notLikeReputation" type="xsd:long"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -81,8 +119,20 @@
     <wsdl:message name="AddReputationSoapRequest">
         <part name="parameters" element="tns:AddReputation"/>
     </wsdl:message>
-    <wsdl:message name="AddReputationSoapRequestResponse">
+    <wsdl:message name="AddReputationSoapResponse">
         <part name="parameters" element="tns:AddReputationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AddLikeReputationSoapRequest">
+        <part name="parameters" element="tns:AddLikeReputation"/>
+    </wsdl:message>
+    <wsdl:message name="AddLikeReputationSoapResponse">
+        <part name="parameters" element="tns:AddLikeReputationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AddNotLikeReputationSoapRequest">
+        <part name="parameters" element="tns:AddNotLikeReputation"/>
+    </wsdl:message>
+    <wsdl:message name="AddNotLikeReputationSoapResponse">
+        <part name="parameters" element="tns:AddNotLikeReputationResponse"/>
     </wsdl:message>
 
     <wsdl:portType name="ReputationInformationService">
@@ -99,7 +149,17 @@
         <wsdl:operation name="AddReputation">
             <documentation>...</documentation>
             <input message="tns:AddReputationSoapRequest"/>
-            <output message="tns:AddReputationSoapRequestResponse"/>
+            <output message="tns:AddReputationSoapResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddLikeReputation">
+            <documentation>...</documentation>
+            <input message="tns:AddLikeReputationSoapRequest"/>
+            <output message="tns:AddLikeReputationSoapResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddNotLikeReputation">
+            <documentation>...</documentation>
+            <input message="tns:AddNotLikeReputationSoapRequest"/>
+            <output message="tns:AddNotLikeReputationSoapResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
@@ -124,6 +184,24 @@
             </output>
         </wsdl:operation>
         <wsdl:operation name="AddReputation">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </wsdl:operation>
+        <wsdl:operation name="AddLikeReputation">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </wsdl:operation>
+        <wsdl:operation name="AddNotLikeReputation">
             <soap:operation soapAction="" style="document"/>
             <input>
                 <soap:body use="literal"/>
