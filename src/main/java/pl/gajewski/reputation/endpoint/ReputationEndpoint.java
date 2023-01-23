@@ -60,10 +60,13 @@ public class ReputationEndpoint {
     @PayloadRoot(namespace = NAME_SPACE, localPart = "AddNotLikeReputation")
     @ResponsePayload
     public AddNotLikeReputationResponse addNotLikeReputation(@RequestPayload AddNotLikeReputation request) {
-        AddNotLikeReputationResponse response = new AddNotLikeReputationResponse();
-        Long result = reputationService.addNotLikeReputation(request.getId());
-        response.setNotLikeReputation(result);
-        return response;
+        return reputationService.addNotLikeReputation(request.getId());
+    }
+
+    @PayloadRoot(namespace = NAME_SPACE, localPart = "DeleteReputation")
+    @ResponsePayload
+    public DeleteReputationResponse deleteReputation(@RequestPayload DeleteReputation request) {
+        return reputationService.deleteReputation(request);
     }
 
 }

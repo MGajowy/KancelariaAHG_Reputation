@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.gajewski.reputation.db.model.ReputationOB;
 import pl.gajewski.reputation.db.model.repository.ReputationRepository;
-import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.AddReputation;
-
-import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.Reputation;
+import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -70,12 +68,23 @@ public class ReputationService {
     }
 
     @Transactional
-    public Long addNotLikeReputation(Long id) {
-        Optional<ReputationOB> result = reputationRepository.findById(id);
-        Long notLikeReputation = result.get().getNotLikeRep();
+    public AddNotLikeReputationResponse addNotLikeReputation(Long id) {
+        AddNotLikeReputationResponse response =  new AddNotLikeReputationResponse();
+        Optional<ReputationOB> resultOB = reputationRepository.findById(id);
+        Long notLikeReputation = resultOB.get().getNotLikeRep();
         notLikeReputation++;
-        result.get().setNotLikeRep(notLikeReputation);
-        reputationRepository.save(result.get());
-        return notLikeReputation;
+        resultOB.get().setNotLikeRep(notLikeReputation);
+        response.setNotLikeReputation(notLikeReputation);
+        reputationRepository.save(resultOB.get());
+        return response;
+    }
+
+    @Transactional
+    public DeleteReputationResponse deleteReputation(DeleteReputation request) {
+        Optional<ReputationOB> result = reputationRepository.findById(request.getId());
+        reputationRepository.delete(result.get());
+        DeleteReputationResponse response =  new DeleteReputationResponse();
+        response.setInformation("ok");
+        return response;
     }
 }

@@ -100,6 +100,20 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
+            <xsd:element name="DeleteReputation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:long"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteReputationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="information" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
 
         </xsd:schema>
     </wsdl:types>
@@ -134,6 +148,12 @@
     <wsdl:message name="AddNotLikeReputationSoapResponse">
         <part name="parameters" element="tns:AddNotLikeReputationResponse"/>
     </wsdl:message>
+    <wsdl:message name="DeleteReputationSoapRequest">
+        <part name="parameters" element="tns:DeleteReputation"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteReputationSoapResponse">
+        <part name="parameters" element="tns:DeleteReputationResponse"/>
+    </wsdl:message>
 
     <wsdl:portType name="ReputationInformationService">
         <wsdl:operation name="getReputation">
@@ -160,6 +180,11 @@
             <documentation>...</documentation>
             <input message="tns:AddNotLikeReputationSoapRequest"/>
             <output message="tns:AddNotLikeReputationSoapResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteReputation">
+            <documentation>...</documentation>
+            <input message="tns:DeleteReputationSoapRequest"/>
+            <output message="tns:DeleteReputationSoapResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
@@ -202,6 +227,15 @@
             </output>
         </wsdl:operation>
         <wsdl:operation name="AddNotLikeReputation">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteReputation">
             <soap:operation soapAction="" style="document"/>
             <input>
                 <soap:body use="literal"/>
