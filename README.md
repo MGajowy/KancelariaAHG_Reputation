@@ -1,3 +1,3 @@
 # KancelariaAHG_Reputation
 
-Aplikacja pobierająca dane o opiniach.
+Aplikacja SOAP API wystawiająca dane o opiniach.
