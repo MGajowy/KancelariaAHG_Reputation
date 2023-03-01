@@ -8,6 +8,9 @@ import pl.gajewski.reputation.db.model.repository.ReputationRepository;
 import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +28,9 @@ public class ReputationService {
     }
 
     private Reputation mapObToReputation(Optional<ReputationOB> result) {
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
         Reputation reputation = new Reputation();
         reputation.setId(result.get().getId());
         reputation.setDescription(result.get().getDescription());
@@ -32,12 +38,14 @@ public class ReputationService {
         reputation.setLike(result.get().getLikeRep());
         reputation.setNotLike(result.get().getNotLikeRep());
         reputation.setVisible(result.get().getVisible());
+        reputation.setDateAdded(result.get().getDateAdded().format(timeFormatter));
         return reputation;
     }
 
     public List<Reputation> getAllReputation() {
         List<ReputationOB> result = reputationRepository.findAll();
         return result.stream()
+                .sorted(Comparator.comparing(ReputationOB::getDateAdded).reversed())
                 .map(reputationOB -> mapObToReputation(Optional.ofNullable(reputationOB)))
                 .collect(Collectors.toList());
     }
@@ -48,12 +56,14 @@ public class ReputationService {
     }
 
     private Long saveReputation(AddReputation reputation) {
+
         ReputationOB reputationOB = new ReputationOB();
         reputationOB.setUserName(reputation.getReputationAdd().getUser());
         reputationOB.setDescription(reputation.getReputationAdd().getDescription());
         reputationOB.setLikeRep(0L);
         reputationOB.setNotLikeRep(0L);
         reputationOB.setVisible(true);
+        reputationOB.setDateAdded(LocalDateTime.now());
         return reputationRepository.save(reputationOB).getId();
     }
 

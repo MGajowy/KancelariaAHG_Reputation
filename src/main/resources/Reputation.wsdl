@@ -18,6 +18,7 @@
                         <xsd:element name="like" type="xsd:long"/>
                         <xsd:element name="notLike" type="xsd:long"/>
                         <xsd:element name="visible" type="xsd:boolean"/>
+                        <xsd:element name="dateAdded" type="xsd:string"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>

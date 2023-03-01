@@ -12,6 +12,7 @@ import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.AddReputation;
 import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.Reputation;
 import pl.kancelaria.AHG.WebService.SOAP.wsdlReputation.ReputationAdd;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -103,6 +104,7 @@ class ReputationServiceTest {
     }
 
     private Optional<ReputationOB> createReputation() {
+
         ReputationOB reputation = new ReputationOB();
         reputation.setId(1);
         reputation.setNotLikeRep(0L);
@@ -110,6 +112,7 @@ class ReputationServiceTest {
         reputation.setUserName("Adam");
         reputation.setDescription("test test");
         reputation.setVisible(true);
+        reputation.setDateAdded(LocalDateTime.now());
         return Optional.of(reputation);
     }
 }

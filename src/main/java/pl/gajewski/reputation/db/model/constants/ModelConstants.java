@@ -8,5 +8,4 @@ public class ModelConstants {
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_LIKE = "like_reputation";
     public static final String COLUMN_NOT_LIKE = "notLike_reputation";
-
 }

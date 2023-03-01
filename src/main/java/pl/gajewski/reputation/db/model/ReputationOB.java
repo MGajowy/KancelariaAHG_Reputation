@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import pl.gajewski.reputation.db.model.constants.ModelConstants;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -35,4 +36,7 @@ public class ReputationOB {
     private Long notLikeRep;
 
     private Boolean visible;
+
+    @NotNull
+    private LocalDateTime dateAdded;
 }
